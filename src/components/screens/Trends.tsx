@@ -28,6 +28,16 @@ export function Trends() {
       )
     : 0;
 
+  // Calculate streak (consecutive nights with good score >= 70)
+  let streak = 0;
+  for (let i = recentNights.length - 1; i >= 0; i--) {
+    if (recentNights[i].score >= 70) {
+      streak++;
+    } else {
+      break;
+    }
+  }
+
   const avgPain = recentNights.length
     ? (
         recentNights
@@ -43,6 +53,8 @@ export function Trends() {
       ? "improving"
       : "steady"
     : "no data";
+
+  const goodNights = recentNights.filter(n => n.score >= 70).length;
 
   return (
     <div className={styles.container}>
@@ -78,8 +90,30 @@ export function Trends() {
           </Card>
         ) : (
           <>
+            <Card className={styles.summaryCard}>
+              <div className={styles.summaryGrid}>
+                <div className={styles.summaryItem}>
+                  <span className={styles.summaryValue}>{streak}</span>
+                  <span className={styles.summaryLabel}>
+                    {streak === 1 ? "Night" : "Night Streak"} 🔥
+                  </span>
+                  <p className={styles.summaryDetail}>Consecutive nights with good score</p>
+                </div>
+                <div className={styles.summaryItem}>
+                  <span className={styles.summaryValue}>{goodNights}</span>
+                  <span className={styles.summaryLabel}>Good Nights</span>
+                  <p className={styles.summaryDetail}>Score of 70 or higher</p>
+                </div>
+                <div className={styles.summaryItem}>
+                  <span className={styles.summaryValue}>{avgScore}</span>
+                  <span className={styles.summaryLabel}>Weekly Avg</span>
+                  <p className={styles.summaryDetail}>Your posture score</p>
+                </div>
+              </div>
+            </Card>
+
             <Card>
-              <p className={styles.cardTitle}>Sleep Score</p>
+              <p className={styles.cardTitle}>Posture Score Trend</p>
               <div className={styles.chart}>
                 {recentNights.map((night, idx) => (
                   <div

@@ -5,7 +5,7 @@ import { Button } from "../common/Button";
 import { Skeleton } from "../common/Skeleton";
 import { useAppStore } from "../../store/appStore";
 import styles from "./Home.module.css";
-import { AlertCircle, TrendingDown, Moon, Zap, HelpCircle, ChevronRight } from "lucide-react";
+import { AlertCircle, TrendingDown, Moon, Zap, HelpCircle, ChevronRight, Heart, Lock } from "lucide-react";
 
 export function Home() {
   const {
@@ -29,9 +29,28 @@ export function Home() {
   }, [logEvent, recordHomeViewTime]);
 
   const scoreTrend = yesterday && today.score > yesterday.score ? "up" : "down";
+  const neckAlignmentMax = Math.max(...today.neckAlignment.map(a => a.alignment));
+
+  const tips = [
+    {
+      id: "tip-1",
+      icon: Heart,
+      title: "Adjust your pillow height",
+      reason: "Right-side sleeping needs better neck support",
+      position: "back" as const,
+    },
+    {
+      id: "tip-2",
+      icon: Zap,
+      title: "Morning neck stretch",
+      reason: "Loosen muscles after extended right-side time",
+      position: "back" as const,
+    },
+  ];
+
   const insights = [
     { id: "sleep-duration", icon: Moon, label: `${today.sleepDuration.toFixed(1)}h sleep`, detail: "Target: 7-9 hours" },
-    { id: "alignment", icon: Zap, label: "Neck alignment", detail: `${Math.max(...today.neckAlignment.map(a => a.alignment))}% max` },
+    { id: "alignment", icon: Zap, label: `Neck alignment: ${neckAlignmentMax}%`, detail: "How well your neck was aligned" },
     { id: "trend", icon: TrendingDown, label: "Trend", detail: scoreTrend === "up" ? "+3 pts vs yesterday" : "-2 pts vs yesterday" },
   ];
 
@@ -64,55 +83,80 @@ export function Home() {
                     logEvent("click_score_to_insights", "home");
                   }}
                 >
+                  <div className={styles.scoreHeader}>
+                    <span className={styles.scoreTitle}>Posture Score</span>
+                    <button
+                      className={styles.scoreInfoBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowScoreInfo(!showScoreInfo);
+                        logEvent("toggle_score_info", "home");
+                      }}
+                      aria-label="Score explanation"
+                    >
+                      <HelpCircle size={16} />
+                    </button>
+                  </div>
                   <div className={styles.scoreCircle}>
                     <span className={styles.score}>{today.score}</span>
-                    <span className={styles.scoreLabel}>Score</span>
+                    <span className={styles.scoreOutOf}>/100</span>
                   </div>
+                  <p className={styles.scoreCaption}>How well your neck was aligned last night</p>
                 </Card>
-
-                <button
-                  className={styles.scoreInfoBtn}
-                  onClick={() => {
-                    setShowScoreInfo(!showScoreInfo);
-                    logEvent("toggle_score_info", "home");
-                  }}
-                  aria-label="Score explanation"
-                >
-                  <HelpCircle size={18} />
-                </button>
               </div>
 
               {showScoreInfo && (
                 <Card className={styles.scoreExplanation}>
-                  <p className={styles.scoreExplainTitle}>What's your Sleep Score?</p>
+                  <p className={styles.scoreExplainTitle}>How is your Posture Score calculated?</p>
                   <ul className={styles.scoreExplainList}>
-                    <li><strong>90-100:</strong> Excellent sleep quality</li>
-                    <li><strong>70-89:</strong> Good sleep, room for improvement</li>
-                    <li><strong>50-69:</strong> Average, consider our tips</li>
-                    <li><strong>&lt;50:</strong> Poor, prioritize adjustments</li>
+                    <li><strong>90-100:</strong> Excellent alignment & sleep quality</li>
+                    <li><strong>70-89:</strong> Good alignment, small improvements possible</li>
+                    <li><strong>50-69:</strong> Average alignment, consider our tips</li>
+                    <li><strong>&lt;50:</strong> Poor alignment, prioritize adjustments</li>
                   </ul>
-                  <p className={styles.scoreExplainFooter}>Based on duration, position, and neck alignment.</p>
+                  <p className={styles.scoreExplainFooter}>Based on sleep duration, sleeping position, and neck alignment throughout the night.</p>
                 </Card>
               )}
 
-              <div className={styles.reasonBox}>
-                <p className={styles.reasonText}>{today.mainReason}</p>
-              </div>
-
+              {/* Risk/Alignment Card */}
               <Card className={`${styles.riskCard} ${styles[`risk-${today.riskLevel}`]}`}>
                 <div className={styles.riskContent}>
-                  <AlertCircle size={20} />
+                  <Heart size={20} />
                   <div className={styles.riskText}>
                     <p className={styles.riskLabel}>
                       {today.riskLevel === "high"
-                        ? "High neck strain"
+                        ? "High neck strain detected"
                         : today.riskLevel === "medium"
-                          ? "Moderate alignment"
-                          : "Good alignment"}
+                          ? "Moderate neck alignment"
+                          : "Excellent neck alignment!"}
+                    </p>
+                    <p className={styles.riskDetail}>
+                      {today.mainReason}
                     </p>
                   </div>
                 </div>
               </Card>
+
+              {/* What to Change Tonight Section */}
+              <div className={styles.tipsSection}>
+                <h3 className={styles.tipsHeading}>💡 What to change tonight</h3>
+                <div className={styles.tipsList}>
+                  {tips.slice(0, 2).map((tip) => {
+                    const Icon = tip.icon;
+                    return (
+                      <Card key={tip.id} className={styles.tipCard}>
+                        <div className={styles.tipContent}>
+                          <Icon size={18} className={styles.tipIcon} />
+                          <div className={styles.tipText}>
+                            <h4 className={styles.tipTitle}>{tip.title}</h4>
+                            <p className={styles.tipDetail}>{tip.reason}</p>
+                          </div>
+                        </div>
+                      </Card>
+                    );
+                  })}
+                </div>
+              </div>
 
               <Button
                 variant="primary"
@@ -143,13 +187,17 @@ export function Home() {
                   </Card>
                 ))}
               </div>
+
+              {/* Privacy Notice */}
+              <Card className={styles.privacyCard}>
+                <div className={styles.privacyContent}>
+                  <Lock size={16} />
+                  <p className={styles.privacyText}>Your sleep data stays on your device—we never store it on our servers.</p>
+                </div>
+              </Card>
             </div>
           </>
         )}
-
-        <p className={styles.privacy}>
-          Your data is private and stays on your device.
-        </p>
       </div>
     </div>
   );

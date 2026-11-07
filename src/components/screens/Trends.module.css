@@ -175,3 +175,49 @@
   margin: var(--space-4) 0 0 0;
   text-align: center;
 }
+
+.summaryCard {
+  padding: var(--space-6) !important;
+  background: linear-gradient(135deg, var(--light-bg), #f0ebe3);
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+.summaryItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-4);
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  gap: var(--space-2);
+}
+
+.summaryValue {
+  font-family: var(--font-heading);
+  font-size: var(--size-3xl);
+  font-weight: 700;
+  color: var(--teal);
+  line-height: 1;
+}
+
+.summaryLabel {
+  font-size: var(--size-xs);
+  color: var(--text-primary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summaryDetail {
+  font-size: var(--size-xs);
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.3;
+}
+

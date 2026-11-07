@@ -66,11 +66,54 @@
   width: 100%;
   cursor: pointer;
   transition: all var(--duration-fast) var(--timing);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
 }
 
 .scoreCard:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
+}
+
+.scoreHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  position: relative;
+}
+
+.scoreTitle {
+  font-size: var(--size-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.scoreInfoBtn {
+  background: var(--light-bg);
+  border: none;
+  padding: var(--space-2);
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast) var(--timing);
+  min-width: 32px;
+  min-height: 32px;
+  margin-left: auto;
+}
+
+.scoreInfoBtn:hover {
+  background: var(--teal);
+  color: var(--white);
+  transform: scale(1.1);
 }
 
 .scoreCircle {
@@ -83,7 +126,6 @@
   border-radius: 50%;
   background: linear-gradient(135deg, var(--teal), #b8956b);
   box-shadow: var(--shadow-md);
-  margin: 0 auto;
 }
 
 .score {
@@ -94,13 +136,18 @@
   line-height: 1;
 }
 
-.scoreLabel {
-  font-size: var(--size-xs);
+.scoreOutOf {
+  font-size: var(--size-sm);
   color: rgba(254, 252, 248, 0.85);
   font-weight: 500;
-  margin-top: var(--space-2);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+}
+
+.scoreCaption {
+  font-size: var(--size-sm);
+  color: var(--text-secondary);
+  margin: 0;
+  text-align: center;
+  line-height: 1.4;
 }
 
 .reasonBox {
@@ -110,6 +157,7 @@
   border-left: 4px solid var(--teal);
   width: 100%;
   text-align: center;
+  display: none;
 }
 
 .reasonText {
@@ -149,8 +197,7 @@
 .riskContent {
   display: flex;
   gap: var(--space-3);
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
 }
 
 .riskCard.risk-low .riskContent {
@@ -167,13 +214,20 @@
 
 .riskText {
   flex: 1;
-  text-align: center;
+  text-align: left;
 }
 
 .riskLabel {
   font-weight: 600;
+  font-size: var(--size-base);
+  margin: 0 0 var(--space-1) 0;
+}
+
+.riskDetail {
   font-size: var(--size-sm);
+  color: inherit;
   margin: 0;
+  line-height: 1.4;
 }
 
 .insightsGrid {
@@ -324,3 +378,90 @@
   padding: 0 var(--space-6);
 }
 
+.tipsSection {
+  width: 100%;
+}
+
+.tipsHeading {
+  font-size: var(--size-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-3) 0;
+  text-align: center;
+}
+
+.tipsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.tipCard {
+  padding: var(--space-4) !important;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--timing);
+  background: linear-gradient(135deg, var(--light-bg), #f0ebe3);
+  border-left: 4px solid var(--teal);
+}
+
+.tipCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.tipContent {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.tipIcon {
+  color: var(--teal);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.tipText {
+  flex: 1;
+}
+
+.tipTitle {
+  font-size: var(--size-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-1) 0;
+}
+
+.tipDetail {
+  font-size: var(--size-xs);
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.privacyCard {
+  padding: var(--space-4) !important;
+  background: linear-gradient(135deg, #f0ebe3, var(--light-bg));
+  border-left: 4px solid var(--teal);
+}
+
+.privacyContent {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.privacyContent svg {
+  color: var(--teal);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.privacyText {
+  font-size: var(--size-xs);
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.4;
+  font-weight: 500;
+}

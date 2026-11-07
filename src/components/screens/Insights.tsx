@@ -25,24 +25,28 @@ export function Insights() {
       title: "Maintain good posture",
       detail: "Keep your pillow at the right height—avoid putting too much pressure on your neck.",
       priority: "high",
+      positionAdvice: "Back sleeping is ideal for neck alignment",
     },
     {
       icon: Moon,
       title: "Aim for 7-9 hours",
-      detail: `You got ${today.sleepDuration.toFixed(1)}h last night. Consistency is key for better scores.`,
+      detail: `You got ${today.sleepDuration.toFixed(1)}h last night. Consistency is key for better posture scores.`,
       priority: "medium",
+      positionAdvice: "Try to sleep 7-9 hours nightly",
     },
     {
       icon: Zap,
       title: "Reduce position changes",
       detail: `${today.positionChangeCount} changes last night. Try to stay on your back for longer periods.`,
       priority: "medium",
+      positionAdvice: "Back position: Stay longer in one position",
     },
     {
       icon: CheckCircle,
       title: "Cool your room",
-      detail: "64-68°F (18-20°C) is ideal for sleep quality.",
+      detail: "64-68°F (18-20°C) is ideal for sleep quality and reduces tossing.",
       priority: "low",
+      positionAdvice: "Better sleep position stability",
     },
   ];
 
@@ -84,7 +88,7 @@ export function Insights() {
             </Card>
 
             <div className={styles.tipsSection}>
-              <h3 className={styles.tipsTitle}>💡 Tips to Improve</h3>
+              <h3 className={styles.tipsTitle}>💡 Tips to Improve Your Posture Score</h3>
               <div className={styles.tipsList}>
                 {tips.map((tip, idx) => {
                   const Icon = tip.icon;
@@ -104,6 +108,13 @@ export function Insights() {
                         <h4 className={styles.tipTitle}>{tip.title}</h4>
                       </div>
                       <p className={styles.tipDetail}>{tip.detail}</p>
+                      <div className={styles.positionSection}>
+                        <svg className={styles.positionIcon} viewBox="0 0 40 60" xmlns="http://www.w3.org/2000/svg">
+                          <ellipse cx="20" cy="12" rx="6" ry="8" fill="currentColor" />
+                          <path d="M 20 20 Q 20 30 15 40 L 10 50 L 15 50 L 20 40 L 25 50 L 30 50 L 25 40 Q 20 30 20 20" fill="currentColor" opacity="0.7" />
+                        </svg>
+                        <span className={styles.positionAdvice}>{tip.positionAdvice}</span>
+                      </div>
                       {tip.priority === "high" && (
                         <div className={styles.priorityBadge}>
                           <AlertCircle size={14} /> Priority
