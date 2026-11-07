@@ -5,7 +5,7 @@ import { Button } from "../common/Button";
 import { Skeleton } from "../common/Skeleton";
 import { useAppStore } from "../../store/appStore";
 import styles from "./Home.module.css";
-import { AlertCircle, TrendingDown, Moon, Zap, HelpCircle, ChevronRight, Heart, Lock } from "lucide-react";
+import { TrendingDown, Moon, Zap, HelpCircle, ChevronRight, Heart, Lock } from "lucide-react";
 
 export function Home() {
   const {
