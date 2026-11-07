@@ -109,11 +109,7 @@ export function Insights() {
                       </div>
                       <p className={styles.tipDetail}>{tip.detail}</p>
                       <div className={styles.positionSection}>
-                        <svg className={styles.positionIcon} viewBox="0 0 40 60" xmlns="http://www.w3.org/2000/svg">
-                          <ellipse cx="20" cy="12" rx="6" ry="8" fill="currentColor" />
-                          <path d="M 20 20 Q 20 30 15 40 L 10 50 L 15 50 L 20 40 L 25 50 L 30 50 L 25 40 Q 20 30 20 20" fill="currentColor" opacity="0.7" />
-                        </svg>
-                        <span className={styles.positionAdvice}>{tip.positionAdvice}</span>
+                        <img src="/posture-good.png" alt="Good sleeping position" className={styles.positionImage} />
                       </div>
                       {tip.priority === "high" && (
                         <div className={styles.priorityBadge}>
